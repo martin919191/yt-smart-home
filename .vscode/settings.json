@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "YT Smart Home",
+            "database": "${workspaceFolder:yt-smart-home}/db/yt-smart-home.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
