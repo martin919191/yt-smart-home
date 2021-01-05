@@ -20,7 +20,7 @@ app.post('/status', (req, res) => {
 });
 
 app.post('/switchStatus', (req, res) => {
-  console.log(`Device status was ${home.getEndpointStatus(req.body['id'])}, now it's ${home.switchEndpointStatus(req.body['id'])}`);
+  console.log(`Device status was ${home.getEndpointStatus(req.body['id'])}, now it's ${home.switchEndpointStatus(req.body['id'], req.body['status'])}`);
   res.send({"status": home.getEndpointStatus(req.body['id'])});
 });
 
