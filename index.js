@@ -16,12 +16,14 @@ app.get('/', (req, res) => {
 
 app.post('/status', (req, res) => {
   console.log(`Device status ${home.getEndpointStatus(req.body['id'])}`);
-  res.send({"status": home.getEndpointStatus(req.body['id'])});
+  res.send({ "status": home.getEndpointStatus(req.body['id']) });
 });
 
 app.post('/switchStatus', (req, res) => {
   console.log(`Device status was ${home.getEndpointStatus(req.body['id'])}, now it's ${home.switchEndpointStatus(req.body['id'], req.body['status'])}`);
-  res.send({"status": home.getEndpointStatus(req.body['id'])});
+  if (home.getEndpointStatus(req.body['id']) == "ON") (io.sockets.emit('STATUS   ', 'ON  '));
+  if (home.getEndpointStatus(req.body['id']) == "OFF") (io.sockets.emit('STATUS   ', 'OFF '));
+  res.send({ "status": home.getEndpointStatus(req.body['id']) });
 });
 
 app.get('/broadcast', (req, res) => {
