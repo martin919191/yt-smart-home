@@ -1,1 +1,0 @@
-CREATE TABLE endpoints (id string, status string)

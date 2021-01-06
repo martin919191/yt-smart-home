@@ -36,6 +36,10 @@ io.on('connection', (socket) => {
     io.emit('msg', msg);
   });
 
+  socket.on('event_name', (msg) => {
+    console.log(msg);
+  });
+
 });
 
 http.listen(3000, () => {
