@@ -32,6 +32,7 @@ app.post('/switchStatus', (req, res) => {
   //if (home.getEndpointStatus(req.body['id']) == "ON") (io.sockets.emit('STATUS   ', 'ON  '));
   //if (home.getEndpointStatus(req.body['id']) == "OFF") (io.sockets.emit('STATUS   ', 'OFF '));
   var endpointIdToSend = req.body['id'].replace(ENDPOINT_ID_PREFIX, "");
+  console.log(`Sending new status to ${endpointIdToSend}`);
   var valueToSend = endpointIdToSend + (home.getEndpointStatus(req.body['id']) == "ON")?STATUS_ON:STATUS_OFF;
   io.sockets.emit('SWITCH', valueToSend);
   res.send({ "status": home.getEndpointStatus(req.body['id']) });
