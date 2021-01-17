@@ -4,6 +4,14 @@ var io = require('socket.io')(http);
 const bodyParser = require('body-parser');
 const Home = require('./lib/Home');
 
+/**** CONSTANT DEFINITION ******/
+const STATUS_ON = '1';
+const STATUS_OFF = '0'
+const ENDPOINT_ID_PREFIX = 'endpoint-';
+const DEVICE_ID = 1
+const DEVICE_TYPE = 'B'
+const DEFAULT_BRIDGE_ID = 1 // 0 is default bridge ID
+
 var home = new Home();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,8 +29,11 @@ app.post('/status', (req, res) => {
 
 app.post('/switchStatus', (req, res) => {
   console.log(`Device status was ${home.getEndpointStatus(req.body['id'])}, now it's ${home.switchEndpointStatus(req.body['id'], req.body['status'])}`);
-  if (home.getEndpointStatus(req.body['id']) == "ON") (io.sockets.emit('STATUS   ', 'ON  '));
-  if (home.getEndpointStatus(req.body['id']) == "OFF") (io.sockets.emit('STATUS   ', 'OFF '));
+  //if (home.getEndpointStatus(req.body['id']) == "ON") (io.sockets.emit('STATUS   ', 'ON  '));
+  //if (home.getEndpointStatus(req.body['id']) == "OFF") (io.sockets.emit('STATUS   ', 'OFF '));
+  var endpointIdToSend = req.body['id'].replace(ENDPOINT_ID_PREFIX, "");
+  var valueToSend = endpointIdToSend + (home.getEndpointStatus(req.body['id']) == "ON")?STATUS_ON:STATUS_OFF;
+  io.sockets.emit('SWITCH', valueToSend);
   res.send({ "status": home.getEndpointStatus(req.body['id']) });
 });
 
