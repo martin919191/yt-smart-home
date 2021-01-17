@@ -33,7 +33,8 @@ app.post('/switchStatus', (req, res) => {
   //if (home.getEndpointStatus(req.body['id']) == "OFF") (io.sockets.emit('STATUS   ', 'OFF '));
   var endpointIdToSend = String.fromCharCode(req.body['id'].replace(ENDPOINT_ID_PREFIX, ""));
   console.log(`Sending new status to ${endpointIdToSend}`);
-  var valueToSend = endpointIdToSend + (home.getEndpointStatus(req.body['id']) == "ON")?STATUS_ON:STATUS_OFF;
+  var valueToSend = endpointIdToSend + "" + ((home.getEndpointStatus(req.body['id']) == "ON")?STATUS_ON:STATUS_OFF);
+  console.log(`Emitting - ${valueToSend}`);
   io.sockets.emit('SWITCH', valueToSend);
   res.send({ "status": home.getEndpointStatus(req.body['id']) });
 });
