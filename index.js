@@ -51,7 +51,7 @@ io.on('connection', (socket) => {
     io.emit('msg', msg);
   });
 
-  socket.on('event_name', (msg) => {
+  socket.on('device-state', (msg) => {
     console.log(msg);
   });
 
