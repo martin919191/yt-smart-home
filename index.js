@@ -6,7 +6,7 @@ const Home = require('./lib/Home');
 
 /**** CONSTANT DEFINITION ******/
 const STATUS_ON = '1';
-const STATUS_OFF = '0'
+const STATUS_OFF = '0';
 const ENDPOINT_ID_PREFIX = 'endpoint-';
 const DEVICE_ID = 1
 const DEVICE_TYPE = 'B'
@@ -53,6 +53,9 @@ io.on('connection', (socket) => {
 
   socket.on('device-state', (msg) => {
     console.log(msg);
+    var newStatus = String.fromCharCode(msg['state'])==STATUS_ON?'ON':'OFF';
+    var id = ENDPOINT_ID_PREFIX + msg['device-id'];
+    home.switchEndpointStatus(id, newStatus);
   });
 
 });
